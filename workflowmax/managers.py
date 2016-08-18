@@ -50,6 +50,6 @@ class Manager():
         setattr(self, method_name, inner)
 
     def __repr__(self):
-        return '%s%s: [\n    %s\n]' % (self.name, self.__class__.__name__, '\n    '.join(
+        return '%s%s:\n    %s' % (self.name, self.__class__.__name__, '\n    '.join(
             '%s(%s)' % (k, ', '.join(v)) for k, v in sorted(self.method_signatures.items())
         ))
