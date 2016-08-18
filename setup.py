@@ -9,7 +9,6 @@ setup(
     author='Jarek Głowacki',
     author_email='jarekwg@gmail.com',
     url='https://github.com/ABASystems/pyworkflowmax',
-    download_url='https://github.com/ABASystems/pyworkflowmax/tarball/0.1',
     keywords=['workflowmax'],
     install_requires=[
         'requests',
