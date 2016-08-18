@@ -3,6 +3,8 @@ POST = 'POST'
 PUT = 'PUT'
 DELETE = 'DELETE'
 
+METHOD_ORDER = [GET, POST, PUT, DELETE]
+
 ENDPOINTS = {
     'Category': {
         'plural': 'categories',

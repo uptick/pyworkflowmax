@@ -1,8 +1,9 @@
-WORKFLOWMAX_BASE_URL = "https://api.workflowmax.com"
-
+import re
 import requests
 
-from .endpoints import ENDPOINTS
+from .endpoints import ENDPOINTS, METHOD_ORDER
+
+WORKFLOWMAX_BASE_URL = "https://api.workflowmax.com"
 
 
 class Manager():
@@ -10,33 +11,46 @@ class Manager():
         self.credentials = credentials
         self.name = name
         self.base_url = '%s/%s.api/' % (WORKFLOWMAX_BASE_URL, name.lower())
+        self.method_signatures = {}
 
-        # Build ORM methods from given url endpoints
-        for method, endpoint in ENDPOINTS[name]['methods']:
-            # TODO: Parse [] bits out of endpoint and use to construct expected param.
-            try:
-                getattr(self, '_%s' % endpoint)()
-            except AttributeError:
-                # TODO: Warn about unprepared endpoint.
-                pass
+        # Build ORM methods from given url endpoints.
+        # Sort them first, to determine duplicate disambiguation order.
+        import pdb; pdb.set_trace()
+        endpoints = sorted(ENDPOINTS[name]['methods'], key=lambda x: METHOD_ORDER.index(x[0]))
+        for method, endpoint in endpoints:
+            self.build_method(method, endpoint)
 
-    def _list(self):
-        """ The "list" endpoint enables use of `all` and `filter`."""
+    def build_method(self, method, endpoint):
+        required_args = re.findall('\[([^\]]*)\]', endpoint)
+        template = endpoint.replace('[', '{').replace(']', '}')
 
         def inner(**kwargs):
-            params = self.credentials.as_params()
-            params.update(kwargs)
+            # Build url
+            try:
+                url = self.base_url + template.format(**kwargs)
+            except KeyError as e:
+                raise KeyError("Missing arg '%s' while building url. Endpoint requires %s." % (
+                    str(e), required_args
+                ))
 
-            response = requests.get(
-                self.base_url + 'list',
-                params=params
-            )
-            # TODO: Handle exceptions
+            # Build query
+            params = self.credentials.as_params()
+            params.update((k, v) for k, v in kwargs.items() if k not in required_args)
+
+            response = requests.request(method, url, params=params)
+            # TODO: Handle exceptions coming from response.
             # TODO: Parse XMLResponse before returning
             return response
 
-        setattr(self, 'all', inner)
-        setattr(self, 'filter', inner)
+        # Build method name
+        method_name = '_'.join(p for p in endpoint.split('/') if '[' not in p)
+        # If it already exists, prepend with method to disambiguate.
+        if hasattr(self, method_name):
+            method_name = '%s_%s' % (method.lower(), method_name)
+        self.method_signatures[method_name] = required_args
+        setattr(self, method_name, inner)
 
     def __repr__(self):
-        return '%sManager()' % (self.name, )
+        return '%s%s: [\n    %s\n]' % (self.name, self.__class__.__name__, '\n    '.join(
+            '%s(%s)' % (k, ', '.join(v)) for k, v in sorted(self.method_signatures.items())
+        ))
