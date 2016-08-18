@@ -12,7 +12,7 @@ pip install pyworkflowmax
 
 Create a `Credentials` instance and provide your API and account keys:
 ```
-from pyworkflowmax import Credentials
+from workflowmax import Credentials
 
 cred = Credentials(
   api_key=os.environ.get('WORKFLOWMAX_API_KEY'),
@@ -22,7 +22,7 @@ cred = Credentials(
 
 Create a `WorkFlowMax` instance, supplying the credentials:
 ```
-from pyworkflowmax import PyWorkflowMax
+from workflowmax import WorkflowMax
 
 wfm = WorkflowMax(cred)
 ```
