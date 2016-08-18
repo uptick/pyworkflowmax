@@ -5,6 +5,11 @@ job management tool.
 
 ## Getting started
 
+Install:
+```
+pip install pyworkflowmax
+```
+
 Create a `Credentials` instance and provide your API and account keys:
 ```
 from pyworkflowmax import Credentials
@@ -34,8 +39,7 @@ If you don't know what you're looking for:
 
 
 ## Development
- 
+
 This project is still a baby. It has no tests, limited post/patch functionality, and supports Python 3 only.
 
 Contributions are welcome. ;)
-
