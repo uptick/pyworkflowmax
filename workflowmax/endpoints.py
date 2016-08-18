@@ -49,7 +49,7 @@ ENDPOINTS = {
             (POST, 'add'),
             (PUT, 'update'),
             (POST, 'delete'),
-            (POST, 'delete'),
+            (POST, 'deleteall'),
         ],
     },
     'CustomField': {
