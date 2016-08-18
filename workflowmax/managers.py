@@ -2,6 +2,7 @@ import re
 import requests
 
 from .endpoints import ENDPOINTS, METHOD_ORDER
+from .utils import xml_to_dict
 
 WORKFLOWMAX_BASE_URL = "https://api.workflowmax.com"
 
@@ -15,7 +16,6 @@ class Manager():
 
         # Build ORM methods from given url endpoints.
         # Sort them first, to determine duplicate disambiguation order.
-        import pdb; pdb.set_trace()
         endpoints = sorted(ENDPOINTS[name]['methods'], key=lambda x: METHOD_ORDER.index(x[0]))
         for method, endpoint in endpoints:
             self.build_method(method, endpoint)
@@ -39,8 +39,7 @@ class Manager():
 
             response = requests.request(method, url, params=params)
             # TODO: Handle exceptions coming from response.
-            # TODO: Parse XMLResponse before returning
-            return response
+            return xml_to_dict(response.text)
 
         # Build method name
         method_name = '_'.join(p for p in endpoint.split('/') if '[' not in p)
