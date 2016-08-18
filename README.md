@@ -20,7 +20,7 @@ cred = Credentials(
 )
 ```
 
-Create a `WorkFlowMax` instance, supplying the credentials:
+Create a `WorkflowMax` instance, supplying the credentials:
 ```
 from workflowmax import WorkflowMax
 
