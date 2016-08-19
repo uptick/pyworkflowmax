@@ -31,10 +31,14 @@ ENDPOINTS = {
             (POST, 'addrelationship'),
             (POST, 'updaterelationship'),
             (POST, 'deleterelationship'),
+            (GET, 'get/[id]/customfield'),
+            (PUT, 'update/[id]/customfield'),
+            (GET, 'contact/[id]/customfield'),
+            (PUT, 'contact/[id]/customfield'),
         ],
     },
     'ClientGroup': {
-        'plural': 'client_groups',
+        'plural': 'clientgroups',
         'methods': [
             (GET, 'list'),
             (GET, 'get/[id]'),
@@ -55,11 +59,9 @@ ENDPOINTS = {
         ],
     },
     'CustomField': {
-        'plural': 'custom_fields',
+        'plural': 'customfields',
         'methods': [
             (GET, 'definition'),
-            (GET, 'customfield'),
-            (PUT, 'customfield'),
         ],
     },
     'Invoice': {
@@ -101,6 +103,12 @@ ENDPOINTS = {
             (POST, 'applytemplate'),
             (POST, 'createquote/[job number]'),
             (POST, 'createestimate/[job number]'),
+            (GET, 'get/[id]/customfield'),
+            (PUT, 'update/[id]/customfield'),
+            (GET, 'task/[id]/customfield'),
+            (PUT, 'task/[id]/customfield'),
+            (GET, 'cost/[id]/customfield'),
+            (PUT, 'cost/[id]/customfield'),
         ],
     },
     'Lead': {
@@ -111,10 +119,12 @@ ENDPOINTS = {
             (GET, 'list'),
             (POST, 'add'),
             (GET, 'categories'),
+            (GET, 'get/[id]/customfield'),
+            (PUT, 'update/[id]/customfield'),
         ],
     },
     'PurchaseOrder': {
-        'plural': 'purchase_orders',
+        'plural': 'purchaseorders',
         'methods': [
             (GET, 'current'),
             (GET, 'get/[order number]'),
@@ -159,6 +169,10 @@ ENDPOINTS = {
             (GET, 'contact/[id]'),
             (PUT, 'contact/[id]'),
             (POST, 'contact'),
+            (GET, 'get/[id]/customfield'),
+            (PUT, 'update/[id]/customfield'),
+            (GET, 'contact/[id]/customfield'),
+            (PUT, 'contact/[id]/customfield'),
         ],
     },
     'Task': {
@@ -184,6 +198,8 @@ ENDPOINTS = {
             (POST, 'add'),
             (PUT, 'update'),
             (DELETE, 'delete/[id]'),
+            (GET, 'get/[id]/customfield'),
+            (PUT, 'update/[id]/customfield'),
         ],
     },
 }
