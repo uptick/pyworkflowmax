@@ -24,7 +24,9 @@ class Manager():
         required_args = re.findall('\[([^\]]*)\]', endpoint)
         template = endpoint.replace('[', '{').replace(']', '}')
 
-        def inner(**kwargs):
+        def inner(*args, **kwargs):
+            if args:
+                raise AttributeError("Unnamed args provided. Only keyword args accepted.")
             # Build url
             try:
                 url = self.base_url + template.format(**kwargs)
