@@ -10,7 +10,7 @@ class Credentials():
         }
 
     def __repr__(self):
-        return '{}:\n    api_key={apiKey}\n    accountKey={accountKey})'.format(
+        return '{}:\n    api_key={apiKey}\n    accountKey={accountKey}'.format(
             self.__class__.__name__,
             **self.as_params()
         )
